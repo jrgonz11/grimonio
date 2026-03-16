@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <title>Portal Arcano</title>
 
 <style>
@@ -12,15 +11,36 @@
 body{
 background: radial-gradient(circle at center,#1b0f2b,#000);
 color:#e8d9ff;
-font-family: "Georgia", serif;
+font-family: Georgia, serif;
 text-align:center;
-padding-top:120px;
+padding-top:100px;
+overflow-x:hidden;
+}
+
+/* estrellas mágicas */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:radial-gradient(white 1px, transparent 1px);
+background-size:40px 40px;
+opacity:0.15;
+animation:stars 40s linear infinite;
+}
+
+@keyframes stars{
+from{transform:translateY(0)}
+to{transform:translateY(-1000px)}
 }
 
 h1{
-font-size:42px;
-letter-spacing:3px;
-margin-bottom:10px;
+font-size:44px;
+letter-spacing:4px;
+margin-bottom:5px;
 }
 
 p{
@@ -30,25 +50,29 @@ color:#cbb6ff;
 input{
 padding:14px;
 font-size:18px;
-width:360px;
+width:380px;
 border:none;
 border-radius:6px;
 text-align:center;
+background:#111;
+color:white;
 }
 
 button{
-padding:12px 26px;
-font-size:17px;
-margin-top:15px;
+padding:12px 24px;
+font-size:16px;
+margin:8px;
 border:none;
 border-radius:6px;
 cursor:pointer;
 background:#5a3dbb;
 color:white;
+transition:0.3s;
 }
 
 button:hover{
 background:#7b5cff;
+transform:scale(1.05);
 }
 
 #pdf{
@@ -58,24 +82,39 @@ font-size:22px;
 color:#7CFF9E;
 }
 
+#gifMagia{
+display:none;
+margin-top:20px;
+width:250px;
+}
+
 .pista{
 display:none;
-margin-top:10px;
-color:#cfcfcf;
+margin-top:12px;
+color:#d9d9d9;
 font-style:italic;
+opacity:0;
+transition:opacity 1s;
+}
+
+.pista.visible{
+display:block;
+opacity:1;
 }
 
 .runa{
-font-size:26px;
+font-size:30px;
 margin-bottom:20px;
 animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
-
 from{opacity:0.5}
 to{opacity:1}
+}
 
+#panelPistas{
+margin-top:30px;
 }
 
 </style>
@@ -88,7 +127,7 @@ to{opacity:1}
 
 <h1>Portal Arcano</h1>
 
-<p>Introduce la frase secreta para revelar la misión</p>
+<p>Introduce el conjuro para revelar la misión</p>
 
 <input id="clave" placeholder="Escribe el conjuro">
 
@@ -98,13 +137,22 @@ to{opacity:1}
 
 <p id="msg"></p>
 
+<img id="gifMagia" src="magia.gif">
+
+<br>
+
 <a id="pdf" href="mision.pdf">
 📜 DESCARGAR INFORME DE MISIÓN
 </a>
 
-<br><br>
+<div id="panelPistas">
+
+<h3>Pistas arcanas</h3>
 
 <button onclick="mostrarPista()">Revelar pista</button>
+<button onclick="ocultarPistas()">Ocultar pistas</button>
+
+<div id="contador"></div>
 
 <div id="pistas">
 
@@ -122,22 +170,29 @@ to{opacity:1}
 
 </div>
 
+</div>
+
 <script>
 
-let correcta="hoy nos infiltramos para robar el grimorio";
+let correcta="esta noche nos infiltramos en la universidad de magia oscura para robar el grimorio";
 
 function check(){
 
-let r=document.getElementById("clave").value.toLowerCase();
+let r=document.getElementById("clave").value.toLowerCase().trim();
 
 if(r===correcta){
 
 document.getElementById("msg").innerHTML="✨ El grimorio ha sido localizado, agente";
+
 document.getElementById("pdf").style.display="block";
+
+document.getElementById("gifMagia").style.display="block";
+
+document.body.style.background="radial-gradient(circle,#2a1c4a,#000)";
 
 }else{
 
-document.getElementById("msg").innerHTML="Las runas no reconocen ese conjuro";
+document.getElementById("msg").innerHTML="Conjuro inválido. ¿Ahora quién es la bruja novata?";
 
 }
 
@@ -151,10 +206,34 @@ let pistas=document.getElementsByClassName("pista");
 
 if(indice<pistas.length){
 
-pistas[indice].style.display="block";
+pistas[indice].classList.add("visible");
 indice++;
 
 }
+
+actualizarContador();
+
+}
+
+function ocultarPistas(){
+
+let pistas=document.getElementsByClassName("pista");
+
+for(let p of pistas){
+
+p.classList.remove("visible");
+
+}
+
+indice=0;
+
+actualizarContador();
+
+}
+
+function actualizarContador(){
+
+document.getElementById("contador").innerHTML="Pistas reveladas: "+indice;
 
 }
 
