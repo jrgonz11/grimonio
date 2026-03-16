@@ -17,7 +17,7 @@ padding-top:100px;
 overflow-x:hidden;
 }
 
-/* estrellas mágicas */
+/* capa de estrellas */
 
 body::before{
 content:"";
@@ -30,6 +30,9 @@ background-image:radial-gradient(white 1px, transparent 1px);
 background-size:40px 40px;
 opacity:0.15;
 animation:stars 40s linear infinite;
+
+pointer-events:none; 
+z-index:-1;
 }
 
 @keyframes stars{
@@ -85,7 +88,7 @@ color:#7CFF9E;
 #gifMagia{
 display:none;
 margin-top:20px;
-width:250px;
+width:260px;
 }
 
 .pista{
@@ -183,12 +186,8 @@ let r=document.getElementById("clave").value.toLowerCase().trim();
 if(r===correcta){
 
 document.getElementById("msg").innerHTML="✨ El grimorio ha sido localizado, agente";
-
 document.getElementById("pdf").style.display="block";
-
 document.getElementById("gifMagia").style.display="block";
-
-document.body.style.background="radial-gradient(circle,#2a1c4a,#000)";
 
 }else{
 
@@ -220,13 +219,10 @@ function ocultarPistas(){
 let pistas=document.getElementsByClassName("pista");
 
 for(let p of pistas){
-
 p.classList.remove("visible");
-
 }
 
 indice=0;
-
 actualizarContador();
 
 }
@@ -240,5 +236,4 @@ document.getElementById("contador").innerHTML="Pistas reveladas: "+indice;
 </script>
 
 </body>
-
 </html>
