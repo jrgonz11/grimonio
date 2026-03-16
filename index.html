@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Portal Arcano</title>
+
+<style>
+
+body{
+background: radial-gradient(circle at center,#1b0f2b,#000);
+color:#e8d9ff;
+font-family: "Georgia", serif;
+text-align:center;
+padding-top:120px;
+}
+
+h1{
+font-size:42px;
+letter-spacing:3px;
+margin-bottom:10px;
+}
+
+p{
+color:#cbb6ff;
+}
+
+input{
+padding:14px;
+font-size:18px;
+width:360px;
+border:none;
+border-radius:6px;
+text-align:center;
+}
+
+button{
+padding:12px 26px;
+font-size:17px;
+margin-top:15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:#5a3dbb;
+color:white;
+}
+
+button:hover{
+background:#7b5cff;
+}
+
+#pdf{
+display:none;
+margin-top:25px;
+font-size:22px;
+color:#7CFF9E;
+}
+
+.pista{
+display:none;
+margin-top:10px;
+color:#cfcfcf;
+font-style:italic;
+}
+
+.runa{
+font-size:26px;
+margin-bottom:20px;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+
+from{opacity:0.5}
+to{opacity:1}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="runa">✶ ✦ ✶</div>
+
+<h1>Portal Arcano</h1>
+
+<p>Introduce la frase secreta para revelar la misión</p>
+
+<input id="clave" placeholder="Escribe el conjuro">
+
+<br>
+
+<button onclick="check()">Invocar</button>
+
+<p id="msg"></p>
+
+<a id="pdf" href="mision.pdf">
+📜 DESCARGAR INFORME DE MISIÓN
+</a>
+
+<br><br>
+
+<button onclick="mostrarPista()">Revelar pista</button>
+
+<div id="pistas">
+
+<p class="pista">Las brujas observan su poder donde se reflejan los rostros.</p>
+
+<p class="pista">El conocimiento prohibido se esconde entre páginas.</p>
+
+<p class="pista">Las sombras se esconden bajo los lugares donde descansamos.</p>
+
+<p class="pista">Un agente siempre guarda su equipo antes de infiltrarse.</p>
+
+<p class="pista">Las pociones nacen donde se preparan los ingredientes.</p>
+
+<p class="pista">La magia se intensifica cerca de la luz.</p>
+
+</div>
+
+<script>
+
+let correcta="hoy nos infiltramos para robar el grimorio";
+
+function check(){
+
+let r=document.getElementById("clave").value.toLowerCase();
+
+if(r===correcta){
+
+document.getElementById("msg").innerHTML="✨ El grimorio ha sido localizado, agente";
+document.getElementById("pdf").style.display="block";
+
+}else{
+
+document.getElementById("msg").innerHTML="Las runas no reconocen ese conjuro";
+
+}
+
+}
+
+let indice=0;
+
+function mostrarPista(){
+
+let pistas=document.getElementsByClassName("pista");
+
+if(indice<pistas.length){
+
+pistas[indice].style.display="block";
+indice++;
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
